@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=	, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <!-- <script src="https://unpkg.com/xml2js/lib/xml2js.js"></script> -->
+    <title>Приветствие</title>
+  </head>
+  <body>
+    <form novalidate>
+      <label for="mail">
+        <span>Please enter an email address:</span>
+        <input type="email" id="mail" name="mail" required minlength="8" />
+        <span class="error" aria-live="polite"></span>
+      </label>
+      <select id="country-select"></select>
+    </form>
+    <script src="main.js"></script>
+  </body>
+</html>
