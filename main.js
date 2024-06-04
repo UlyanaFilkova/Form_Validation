@@ -1,6 +1,3 @@
-// import fetch from "unfetch";
-// import xml2js from "xml2js";
-
 fetch("countries.xml")
   .then((response) => response.text())
   .then((data) => {
@@ -20,28 +17,52 @@ fetch("countries.xml")
   .catch((error) => {
     console.error(error);
   });
-// fetch("countries.xml")
-//   .then((response) => response.text())
-//   .then((data) => {
-//     const parser = new DOMParser();
-//     const doc = parser.parseFromString(data, "application/xml");
-//     const items = doc.getElementsByTagName("country");
-//     console.log(items.length);
-//     const countryNames = Array.from(items).map(
-//       (countryNode) => countryNode.querySelector("name").textContent
-//     );
 
-//     console.log(countryNames);
-//   })
-//   .catch((error) => {
-//     console.error(error);
-//   });
+fetch("https://ipinfo.io/json")
+  .then((response) => response.json())
+  .then((data) => {
+    const userCountryCode = data.country;
+    console.log(userCountryCode);
 
-// const countrySelect = document.getElementById("country-select");
+    // Загрузка countries.xml
+    return fetch("countries.xml")
+      .then((response) => response.text())
+      .then((xmlData) => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "application/xml");
 
-// countryList.forEach((country) => {
-//   const option = document.createElement("option");
-//   option.value = country;
-//   option.text = country.name;
-//   countrySelect.add(option);
-// });
+        // Поиск страны по коду в countries.xml
+        const countryNode = Array.from(
+          xmlDoc.getElementsByTagName("country")
+        ).find(
+          (node) => node.querySelector("alpha2").textContent === userCountryCode
+        );
+        if (countryNode) {
+          const countryName = countryNode.querySelector("name").textContent;
+          console.log("Полное название страны:", countryName);
+
+          // Установка выбранной страны по умолчанию
+          const countrySelect = document.getElementById("country-select");
+          const alpha3 = countryNode.querySelector("alpha3").textContent;
+          countrySelect.value = alpha3;
+        } else {
+          console.log("Страна не найдена в countries.xml");
+        }
+      });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+const input = document.getElementById("phone-number");
+window.intlTelInput(input, {
+  initialCountry: "auto",
+  geoIpLookup: function (callback) {
+    $.get("https://ipinfo.io", function () {}, "jsonp").always(function (resp) {
+      var countryCode = resp && resp.country ? resp.country : "";
+      callback(countryCode);
+    });
+  },
+  utilsScript:
+    "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.9/build/js/utils.js",
+});

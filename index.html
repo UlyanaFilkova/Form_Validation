@@ -3,19 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=	, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.9/build/css/intlTelInput.css"
+    />
+    <link rel="stylesheet" href="style.css" />
     <!-- <script src="https://unpkg.com/xml2js/lib/xml2js.js"></script> -->
     <title>Приветствие</title>
   </head>
   <body>
     <form novalidate>
       <label for="mail">
-        <span>Please enter an email address:</span>
-        <input type="email" id="mail" name="mail" required minlength="8" />
-        <span class="error" aria-live="polite"></span>
+        <span>Электронная почта:</span>
+        <input
+          type="email"
+          id="mail"
+          name="mail"
+          required
+          minlength="8"
+          aria-describedby="email-error"
+        />
+        <span class="form-error form-error--email" aria-live="polite"></span>
       </label>
-      <select id="country-select"></select>
+
+      <label for="country-select">
+        <span>Страна:</span>
+        <select id="country-select" required></select>
+        <span
+          class="form-error form-error--country-select"
+          aria-live="polite"
+        ></span>
+      </label>
+
+      <label for="phone-number">
+        <span>Номер телефона:</span>
+        <input type="tel" id="phone-number" required />
+        <span
+          class="form-error form-error--phone-number"
+          aria-live="polite"
+        ></span>
+      </label>
+
+      <label for="password" required>
+        <span>Пароль:</span>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          minlength="8"
+        />
+        <span class="form-error form-error--password" aria-live="polite"></span>
+      </label>
+
+      <label for="password-confirmation" required>
+        <span>Подтверждение пароля:</span>
+        <input
+          type="password"
+          id="password-confirmation"
+          name="password-confirmation"
+          required
+          minlength="8"
+        />
+        <span
+          class="form-error form-error--password-confirmation"
+          aria-live="polite"
+        ></span>
+      </label>
     </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.9/build/js/intlTelInput.min.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
